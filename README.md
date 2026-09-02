@@ -2,322 +2,89 @@
 
 ## 📌 Project Overview
 
-Customer segmentation is an important data analytics and machine learning technique used to divide a large customer base into smaller groups based on similar characteristics, preferences, and behavioral patterns.
+Customer segmentation is the process of dividing customers into different groups based on similar characteristics and behavior. It helps businesses understand their customers and develop more effective marketing and business strategies.
 
-Understanding customer behavior is essential for businesses because different customers have different purchasing habits, financial capabilities, and spending patterns. By grouping customers into meaningful segments, organizations can better understand their target audience and develop effective business and marketing strategies.
+This project implements the **K-Means Clustering algorithm** to segment customers based on their characteristics. The primary focus of the analysis is on customer **Annual Income** and **Spending Score**.
 
-This project demonstrates the application of the **K-Means Clustering algorithm**, an unsupervised machine learning technique, to perform customer segmentation. The analysis focuses primarily on customer **Annual Income** and **Spending Score** to identify groups of customers with similar financial and purchasing behavior.
-
-The project includes data loading, exploratory analysis, feature selection, feature scaling, determination of the optimal number of clusters using the Elbow Method, implementation of the K-Means algorithm, visualization of customer segments, and analysis of the resulting clusters.
+The K-Means algorithm is an **unsupervised machine learning algorithm**, meaning that it identifies patterns and groups in the data without requiring predefined output labels.
 
 ---
 
-# 🎯 Project Objectives
+## 🎯 Objectives
 
-The primary objective of this project is to apply the K-Means Clustering algorithm to identify meaningful customer segments.
+The objectives of this project are:
 
-The specific objectives are:
-
-* To understand the concept of customer segmentation.
-* To perform exploratory analysis on customer data.
-* To identify relevant features for clustering.
-* To prepare the dataset for machine learning analysis.
-* To perform feature scaling using StandardScaler.
+* To perform customer segmentation using K-Means Clustering.
+* To explore and understand the customer dataset.
+* To analyze customer age, annual income, and spending behavior.
+* To check the dataset for missing values.
+* To select appropriate features for clustering.
+* To standardize the selected features using StandardScaler.
 * To determine the optimal number of clusters using the Elbow Method.
-* To implement the K-Means Clustering algorithm.
-* To assign customers to different clusters based on their characteristics.
-* To visualize customer segments using graphical representations.
-* To identify the centroid of each cluster.
-* To analyze customer behavior within different segments.
-* To generate a final dataset containing customer cluster labels.
-* To demonstrate the practical application of unsupervised machine learning.
+* To train a K-Means Clustering model.
+* To assign customers to different clusters.
+* To visualize customer segments.
+* To analyze the characteristics of each customer group.
+* To save the final dataset with cluster labels.
 
 ---
 
-# 📚 Introduction
+## 📊 Dataset
 
-Businesses collect large amounts of customer data from different sources, including purchases, transactions, customer profiles, online activities, and feedback.
+The dataset used for this project contains customer information.
 
-However, analyzing all customers as a single group may not provide meaningful insights because customers often have significantly different characteristics and spending habits.
+### Dataset Columns
 
-Customer segmentation helps solve this problem by dividing customers into smaller groups based on similarities in their data.
+| Column Name       | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| `CustomerID`      | Unique identification number assigned to each customer   |
+| `Age`             | Age of the customer                                      |
+| `Annual_Income_k` | Annual income of the customer                            |
+| `Spending_Score`  | Score representing the spending behavior of the customer |
 
-For example, a business may identify:
+### Features Used for Clustering
 
-* Customers with high income and high spending behavior.
-* Customers with high income but low spending behavior.
-* Customers with low income and high spending behavior.
-* Customers with low income and low spending behavior.
-* Customers with moderate income and moderate spending patterns.
+The following features are used for the main clustering analysis:
 
-These groups can help organizations understand customer behavior and develop personalized strategies.
+* `Annual_Income_k`
+* `Spending_Score`
 
-In this project, the **K-Means Clustering algorithm** is used to automatically identify customer groups from the dataset.
-
----
-
-# 📊 Dataset Description
-
-The dataset used in this project is:
-
-```text
-customer_segmentation_kmeans_dataset.csv
-```
-
-The dataset contains customer information that can be used to analyze customer characteristics and spending behavior.
-
-The dataset includes the following features:
-
-| Feature                | Description                                              |
-| ---------------------- | -------------------------------------------------------- |
-| CustomerID             | Unique identification number assigned to each customer   |
-| Gender                 | Gender of the customer                                   |
-| Age                    | Age of the customer                                      |
-| Annual Income (k$)     | Annual income of the customer in thousands of dollars    |
-| Spending Score (1-100) | Score representing the spending behavior of the customer |
+These features help identify customers with similar financial capacity and spending behavior.
 
 ---
 
-## 📌 Features Used for Clustering
+## 🤖 Machine Learning Algorithm
 
-Although the dataset contains multiple features, this project primarily uses the following features for customer segmentation:
+### K-Means Clustering
 
-### 1. Annual Income (k$)
+K-Means is an unsupervised machine learning algorithm used to group similar data points into clusters.
 
-Annual Income represents the financial capacity of a customer.
+The algorithm works by:
 
-Customers with similar income levels may demonstrate similar purchasing capabilities.
-
-### 2. Spending Score (1-100)
-
-The Spending Score represents the spending behavior of a customer.
-
-A higher spending score generally indicates higher customer spending behavior, while a lower score indicates lower spending behavior.
-
-These two features provide a clear representation of customer financial and spending patterns and are suitable for visualization using a two-dimensional scatter plot.
+1. Selecting the number of clusters (`K`).
+2. Initializing cluster centroids.
+3. Calculating the distance between data points and centroids.
+4. Assigning each customer to the nearest cluster.
+5. Recalculating the cluster centroids.
+6. Repeating the process until the clusters become stable.
 
 ---
 
-# 🤖 Machine Learning Approach
+## ⚙️ Project Workflow
 
-## Unsupervised Machine Learning
-
-This project uses an **Unsupervised Machine Learning** approach.
-
-In supervised learning, the dataset contains predefined output labels, and the algorithm learns to predict those labels.
-
-However, in unsupervised learning, the dataset does not contain predefined categories.
-
-The algorithm automatically identifies patterns and relationships within the data.
-
-In this project, customers are not initially assigned to predefined customer groups.
-
-The K-Means algorithm automatically groups customers based on similarities between their income and spending behavior.
-
----
-
-# 🔷 K-Means Clustering Algorithm
-
-K-Means is one of the most widely used clustering algorithms in machine learning and data analysis.
-
-The purpose of K-Means is to divide data points into a specified number of groups called **clusters**.
-
-Each cluster contains data points that are more similar to one another than to data points in other clusters.
-
-The value of **K** represents the number of clusters.
-
----
-
-## ⚙️ How K-Means Works
-
-The K-Means algorithm follows the steps below:
-
-### Step 1: Select the Number of Clusters
-
-The number of clusters, represented by **K**, is selected.
-
-For example:
-
-```text
-K = 5
-```
-
-means that the dataset will be divided into five different customer groups.
-
----
-
-### Step 2: Initialize Cluster Centroids
-
-The algorithm selects initial points called **centroids**.
-
-A centroid represents the center of a cluster.
-
----
-
-### Step 3: Calculate Distance
-
-The algorithm calculates the distance between each customer data point and the available cluster centroids.
-
----
-
-### Step 4: Assign Customers to Clusters
-
-Each customer is assigned to the cluster with the nearest centroid.
-
----
-
-### Step 5: Recalculate Centroids
-
-After assigning customers to clusters, new centroid positions are calculated.
-
----
-
-### Step 6: Repeat the Process
-
-The algorithm continues assigning customers and recalculating centroids until the clusters become stable.
-
-The final output is a set of customer groups with similar characteristics.
-
----
-
-# 📈 Data Preprocessing
-
-Data preprocessing is an important stage in any machine learning project.
-
-Before applying the K-Means algorithm, the dataset must be prepared for analysis.
-
-The preprocessing steps in this project include:
-
-* Loading the dataset.
-* Exploring the dataset structure.
-* Checking data types.
-* Checking for missing values.
-* Generating statistical summaries.
-* Selecting relevant features.
-* Scaling numerical features.
-
----
-
-# 🔍 Exploratory Data Analysis
-
-Exploratory Data Analysis (EDA) is performed to understand the structure and characteristics of the dataset.
-
-The analysis includes:
-
-* Viewing the first few records.
-* Checking the number of rows and columns.
-* Identifying dataset features.
-* Examining data types.
-* Checking for missing values.
-* Generating descriptive statistics.
-
-This step helps ensure that the dataset is suitable for clustering analysis.
-
----
-
-# 🧹 Missing Value Analysis
-
-Missing values can affect the performance and accuracy of machine learning algorithms.
-
-The dataset is checked for missing values using Pandas.
-
-```python
-df.isnull().sum()
-```
-
-If missing values are present, appropriate preprocessing techniques should be applied before training the clustering model.
-
----
-
-# 📊 Statistical Analysis
-
-A statistical summary is generated to understand the numerical characteristics of the dataset.
-
-```python
-df.describe()
-```
-
-The statistical summary provides information such as:
-
-* Count
-* Mean
-* Standard Deviation
-* Minimum Value
-* Maximum Value
-* 25th Percentile
-* 50th Percentile
-* 75th Percentile
-
-This information helps in understanding the distribution of customer characteristics.
-
----
-
-# ⚖️ Feature Scaling
-
-Feature scaling is performed before applying the K-Means algorithm.
-
-The selected features may have different numerical ranges.
-
-For example:
-
-* Annual Income may have values ranging across larger numerical values.
-* Spending Score has values between 1 and 100.
-
-Without feature scaling, features with larger numerical values may have a greater influence on the clustering process.
-
-To avoid this issue, **StandardScaler** is used.
-
-```python
-from sklearn.preprocessing import StandardScaler
-
-scaler = StandardScaler()
-
-X_scaled = scaler.fit_transform(X)
-```
-
-Feature scaling ensures that both selected features contribute appropriately to the clustering process.
-
----
-
-# 📉 Elbow Method
-
-One of the important challenges in K-Means Clustering is selecting the appropriate number of clusters.
-
-The **Elbow Method** is used to determine the optimal value of K.
-
-The method calculates the **Within-Cluster Sum of Squares (WCSS)** for different numbers of clusters.
-
----
-
-## What is WCSS?
-
-WCSS represents the total squared distance between each data point and the centroid of its assigned cluster.
-
-A lower WCSS value generally indicates that data points are closer to their cluster centroids.
-
-However, increasing the number of clusters will naturally decrease WCSS.
-
-The Elbow Method helps identify a suitable balance between:
-
-* Too few clusters.
-* Too many clusters.
-
-The optimal number of clusters is selected at the point where the graph forms an elbow-like shape.
-
----
-
-# 📊 Customer Segmentation Process
-
-The customer segmentation process includes the following stages:
+The project follows the workflow below:
 
 ```text
 Customer Dataset
        │
        ▼
+Data Loading
+       │
+       ▼
 Data Exploration
        │
        ▼
-Data Preprocessing
+Missing Value Analysis
        │
        ▼
 Feature Selection
@@ -335,138 +102,197 @@ Optimal Number of Clusters
 K-Means Clustering
        │
        ▼
-Customer Cluster Assignment
+Cluster Assignment
        │
        ▼
-Visualization and Analysis
+Data Visualization
+       │
+       ▼
+Customer Segment Analysis
 ```
 
 ---
 
-# 📈 Cluster Visualization
+## 🔍 Exploratory Data Analysis
 
-The customer segments generated by the K-Means algorithm are visualized using scatter plots.
+Before applying the K-Means algorithm, the dataset is explored to understand its structure and characteristics.
 
-The visualization includes:
+The following operations are performed:
 
-* **X-axis:** Annual Income (k$)
-* **Y-axis:** Spending Score (1-100)
-* **Colors:** Different customer clusters
+* Displaying the first few rows of the dataset.
+* Checking the dataset dimensions.
+* Checking data types.
+* Checking for missing values.
+* Generating descriptive statistics.
 
-The scatter plot helps visually identify customer groups and understand the relationship between income and spending behavior.
+Typical functions used include:
 
----
-
-# 🎯 Cluster Centroids
-
-Each cluster contains a central point known as a **centroid**.
-
-The centroid represents the average position of the customers belonging to that cluster.
-
-Cluster centroids are displayed along with customer data points to provide a better understanding of the clustering structure.
-
-The visualization includes:
-
-* Customer data points.
-* Different customer clusters.
-* Cluster centroids.
+```python
+df.head()
+df.shape
+df.info()
+df.describe()
+```
 
 ---
 
-# 📊 Customer Segment Analysis
+## 🧹 Data Preprocessing
 
-After clustering, customers are divided into groups based on similarities in Annual Income and Spending Score.
+Data preprocessing is performed before applying the clustering algorithm.
 
-The clusters may represent different customer behavior patterns, such as:
+The preprocessing steps include:
+
+* Checking for missing values.
+* Selecting relevant numerical features.
+* Preparing the data for clustering.
+* Standardizing features using `StandardScaler`.
+
+---
+
+## ⚖️ Feature Scaling
+
+Feature scaling is important because the selected features may have different numerical ranges.
+
+For example:
+
+* `Annual_Income_k` may have a larger range of values.
+* `Spending_Score` may have values within a different range.
+
+To ensure that both features contribute equally to the clustering process, `StandardScaler` is used.
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+```
+
+---
+
+## 📉 Elbow Method
+
+The **Elbow Method** is used to determine the optimal number of clusters.
+
+The method calculates the **Within-Cluster Sum of Squares (WCSS)** for different values of `K`.
+
+The optimal number of clusters is selected by observing the point where the WCSS graph forms an elbow-like shape.
+
+### WCSS
+
+WCSS measures the total squared distance between data points and the centroid of their assigned cluster.
+
+A lower WCSS value generally indicates that data points are closer to their respective cluster centroids.
+
+---
+
+## 📊 Feature Selection
+
+The following features are selected for clustering:
+
+```python
+X = df[[
+    "Annual_Income_k",
+    "Spending_Score"
+]]
+```
+
+These features are used because they provide meaningful information about customer income and spending behavior.
+
+---
+
+## 📈 Customer Segmentation
+
+After identifying the optimal number of clusters, the K-Means algorithm is trained using the scaled dataset.
+
+Each customer is assigned a cluster label.
+
+For example:
+
+```text
+Customer 1 → Cluster 0
+Customer 2 → Cluster 1
+Customer 3 → Cluster 2
+```
+
+Customers within the same cluster have similar characteristics based on their annual income and spending score.
+
+---
+
+## 📉 Data Visualization
+
+The clustering results are visualized using a scatter plot.
+
+The visualization represents:
+
+* **X-axis:** Annual Income
+* **Y-axis:** Spending Score
+* **Different colors:** Different customer clusters
+
+The visualization helps identify patterns and relationships between customer income and spending behavior.
+
+---
+
+## 🎯 Cluster Analysis
+
+The generated clusters may represent different customer groups, such as:
 
 ### High Income – High Spending
 
-Customers in this segment have a high annual income and a high spending score.
+Customers with high annual income and high spending behavior.
 
-These customers may represent valuable customers for businesses.
-
----
+These customers may represent high-value customers.
 
 ### High Income – Low Spending
 
-Customers in this segment have a high annual income but a lower spending score.
+Customers with high income but lower spending behavior.
 
-Businesses may analyze this group to understand why their spending behavior is lower.
-
----
+Businesses may develop strategies to improve engagement with this group.
 
 ### Low Income – High Spending
 
-Customers in this group have lower income but higher spending behavior.
+Customers with lower income but higher spending behavior.
 
-This segment may demonstrate strong purchasing interest despite having a lower income level.
-
----
+These customers may show strong purchasing interest.
 
 ### Low Income – Low Spending
 
-Customers in this group have lower income and lower spending behavior.
-
-Businesses may develop appropriate strategies for this customer segment.
-
----
+Customers with lower income and lower spending behavior.
 
 ### Moderate Income – Moderate Spending
 
-Customers in this group demonstrate average income and spending behavior.
+Customers with average income and moderate spending behavior.
 
-This segment may represent the general customer population.
+> **Note:** The exact characteristics of each cluster depend on the results generated by the K-Means model.
 
 ---
 
-# 💼 Business Applications
+## 💼 Business Applications
 
-Customer segmentation has several practical business applications.
+Customer segmentation can support several business applications.
 
-## 🎯 Targeted Marketing
+### 🎯 Targeted Marketing
 
 Businesses can create personalized marketing campaigns for different customer groups.
 
-Instead of using the same strategy for all customers, companies can develop targeted campaigns.
+### 💰 Customer Value Analysis
+
+Businesses can identify high-value customer segments.
+
+### 🛍️ Personalized Recommendations
+
+Businesses can recommend products based on customer characteristics and behavior.
+
+### 🤝 Customer Retention
+
+Businesses can develop strategies to improve customer satisfaction and retention.
+
+### 📈 Data-Driven Decision Making
+
+Customer segmentation provides useful insights for improving marketing and business strategies.
 
 ---
 
-## 💰 Customer Value Analysis
-
-Customer segmentation can help businesses identify high-value customers.
-
-These customers can receive special offers, rewards, and personalized services.
-
----
-
-## 🛍️ Product Recommendations
-
-Customer segments can be used to recommend suitable products based on customer characteristics and behavior.
-
----
-
-## 🤝 Customer Retention
-
-Businesses can identify valuable customer segments and develop strategies to improve customer satisfaction and retention.
-
----
-
-## 📈 Data-Driven Decision Making
-
-Customer segmentation provides meaningful insights that can support business decisions.
-
-Organizations can use the results to improve:
-
-* Marketing strategies.
-* Customer service.
-* Product development.
-* Business planning.
-
----
-
-# 🛠️ Technologies Used
-
-The following technologies and tools are used in this project:
+## 🛠️ Technologies Used
 
 ### Programming Language
 
@@ -485,257 +311,127 @@ The following technologies and tools are used in this project:
 
 ---
 
-# 📚 Library Description
+## 📚 Libraries and Their Purpose
 
-## Pandas
-
-Pandas is used for:
-
-* Loading CSV files.
-* Data manipulation.
-* Data analysis.
-* Data preprocessing.
+| Library      | Purpose                                |
+| ------------ | -------------------------------------- |
+| Pandas       | Data loading and data manipulation     |
+| NumPy        | Numerical operations                   |
+| Matplotlib   | Data visualization                     |
+| Scikit-learn | K-Means Clustering and feature scaling |
 
 ---
 
-## NumPy
-
-NumPy is used for numerical computations and array operations.
-
----
-
-## Matplotlib
-
-Matplotlib is used for:
-
-* Creating graphs.
-* Visualizing the Elbow Method.
-* Displaying customer clusters.
-* Displaying cluster centroids.
-
----
-
-## Scikit-learn
-
-Scikit-learn is used for machine learning tasks.
-
-The following modules are used:
-
-```python
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
-```
-
----
-
-# ⚙️ Project Workflow
-
-The complete workflow of the project is:
+## 🚀 Implementation Steps
 
 ### Step 1: Import Required Libraries
 
-Import the required Python libraries for data analysis, visualization, and machine learning.
+Import the required libraries for data analysis, visualization, and machine learning.
+
+### Step 2: Load the Dataset
+
+Load the customer segmentation dataset using Pandas.
+
+### Step 3: Explore the Dataset
+
+Analyze the dataset structure, data types, and statistical information.
+
+### Step 4: Check Missing Values
+
+Identify whether the dataset contains missing values.
+
+### Step 5: Select Features
+
+Select `Annual_Income_k` and `Spending_Score` for clustering.
+
+### Step 6: Perform Feature Scaling
+
+Standardize the selected features using `StandardScaler`.
+
+### Step 7: Apply the Elbow Method
+
+Calculate WCSS for multiple values of `K`.
+
+### Step 8: Identify the Optimal Number of Clusters
+
+Select an appropriate number of clusters based on the Elbow Method graph.
+
+### Step 9: Train the K-Means Model
+
+Apply the K-Means algorithm to the scaled dataset.
+
+### Step 10: Assign Cluster Labels
+
+Add the generated cluster labels to the original dataset.
+
+### Step 11: Visualize Customer Segments
+
+Create a scatter plot to visualize the customer clusters.
+
+### Step 12: Save the Results
+
+Save the final dataset containing the assigned cluster labels.
 
 ---
 
-### Step 2: Upload the Dataset
-
-Upload the dataset file:
-
-```text
-customer_segmentation_kmeans_dataset.csv
-```
-
----
-
-### Step 3: Load the Dataset
-
-Load the dataset using Pandas.
-
-```python
-df = pd.read_csv("customer_segmentation_kmeans_dataset.csv")
-```
-
----
-
-### Step 4: Explore the Dataset
-
-Examine the dataset using:
-
-* `df.head()`
-* `df.shape`
-* `df.info()`
-
----
-
-### Step 5: Check Missing Values
-
-Check for missing values using:
-
-```python
-df.isnull().sum()
-```
-
----
-
-### Step 6: Generate Statistical Summary
-
-Generate descriptive statistics using:
-
-```python
-df.describe()
-```
-
----
-
-### Step 7: Select Features
-
-Select the features used for clustering.
-
-```python
-X = df[
-    [
-        "Annual Income (k$)",
-        "Spending Score (1-100)"
-    ]
-]
-```
-
----
-
-### Step 8: Perform Feature Scaling
-
-Scale the selected features using StandardScaler.
-
----
-
-### Step 9: Apply the Elbow Method
-
-Calculate WCSS values for different values of K.
-
----
-
-### Step 10: Visualize the Elbow Method
-
-Create a graph to identify the optimal number of clusters.
-
----
-
-### Step 11: Train the K-Means Model
-
-Train the K-Means Clustering algorithm using the selected number of clusters.
-
----
-
-### Step 12: Assign Cluster Labels
-
-Assign the generated cluster labels to the original dataset.
-
----
-
-### Step 13: Visualize Customer Segments
-
-Create a scatter plot to visualize the different customer groups.
-
----
-
-### Step 14: Display Cluster Centroids
-
-Visualize the cluster centroids.
-
----
-
-### Step 15: Analyze Customer Clusters
-
-Calculate average characteristics for each cluster.
-
----
-
-### Step 16: Save the Final Result
-
-Save the segmented customer dataset.
-
----
-
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```text
 customer-segmentation-kmeans/
 │
 ├── Customer_Segmentation_Using_K_Means_Clustering.ipynb
-│
 ├── customer_segmentation_kmeans_dataset.csv
-│
 ├── Customer_Segmentation_Result.csv
-│
 └── README.md
 ```
 
 ---
 
-# ▶️ How to Run the Project
+## ▶️ How to Run the Project
 
-## Step 1: Download or Clone the Repository
+### 1. Clone or Download the Repository
 
-Download the project files from the GitHub repository.
+Download or clone this repository to your local system.
 
----
+### 2. Open the Notebook
 
-## Step 2: Open the Notebook
-
-Open the following notebook:
-
-```text
-Customer_Segmentation_Using_K_Means_Clustering.ipynb
-```
-
-The notebook can be opened using:
+Open the Jupyter Notebook file using:
 
 * Google Colab
 * Jupyter Notebook
 
----
+### 3. Upload the Dataset
 
-## Step 3: Upload the Dataset
+Ensure that the customer segmentation dataset is available in the working directory.
 
-Upload:
+### 4. Install Required Libraries
 
-```text
-customer_segmentation_kmeans_dataset.csv
-```
+Install the required libraries if necessary:
 
----
-
-## Step 4: Install Required Libraries
-
-If required, install the necessary Python libraries.
-
-```python
+```bash
 pip install pandas numpy matplotlib scikit-learn
 ```
 
----
+### 5. Run the Notebook
 
-## Step 5: Run All Cells
+Run all cells sequentially.
 
-Run the notebook cells sequentially.
-
-The program will:
+The notebook will:
 
 * Load the dataset.
-* Explore the dataset.
+* Explore the data.
 * Check for missing values.
-* Perform feature selection.
-* Apply feature scaling.
-* Use the Elbow Method.
+* Select relevant features.
+* Scale the features.
+* Apply the Elbow Method.
 * Train the K-Means model.
-* Generate customer clusters.
-* Visualize the clustering results.
-* Analyze the customer segments.
+* Assign customer clusters.
+* Visualize the segmentation results.
+* Save the final output dataset.
 
 ---
 
-# 📌 Expected Output
+## 📌 Expected Output
 
 The project generates the following outputs:
 
@@ -743,90 +439,85 @@ The project generates the following outputs:
 * Dataset information.
 * Missing value analysis.
 * Statistical summary.
-* Selected features.
-* Feature scaling results.
+* Feature scaling.
 * Elbow Method graph.
-* WCSS values.
+* Optimal cluster selection.
 * Customer segmentation visualization.
-* Cluster centroid visualization.
 * Cluster analysis.
-* Final segmented dataset.
+* Final dataset with cluster labels.
 
 ---
 
-# 📄 Final Output Dataset
+## 📄 Output Dataset
 
-After completing the clustering process, the final dataset is saved as:
+After applying K-Means Clustering, the final dataset contains an additional column:
 
 ```text
-Customer_Segmentation_Result.csv
+Cluster
 ```
 
-The output dataset contains the original customer information along with an additional cluster column.
+This column indicates the cluster assigned to each customer.
 
-Example structure:
+Example:
 
-| CustomerID | Gender | Age | Annual Income (k$) | Spending Score (1-100) | Cluster |
-| ---------- | ------ | --- | ------------------ | ---------------------- | ------- |
-| 1          | Male   | 19  | 15                 | 39                     | 0       |
-| 2          | Male   | 21  | 15                 | 81                     | 1       |
+| CustomerID | Age | Annual_Income_k | Spending_Score | Cluster |
+| ---------- | --: | --------------: | -------------: | ------: |
+| 1          |  19 |              15 |             39 |       0 |
+| 2          |  21 |              16 |             81 |       1 |
 
 ---
 
-# 🎓 Learning Outcomes
+## 🎓 Learning Outcomes
 
-After completing this project, the following concepts are demonstrated:
+This project demonstrates the following concepts:
 
 * Python programming.
-* Dataset handling using Pandas.
+* Data loading using Pandas.
 * Exploratory Data Analysis.
 * Data preprocessing.
 * Feature selection.
 * Feature scaling.
-* Unsupervised Machine Learning.
+* Unsupervised machine learning.
 * K-Means Clustering.
 * Elbow Method.
 * WCSS analysis.
-* Cluster centroid analysis.
+* Cluster analysis.
 * Data visualization.
 * Customer behavior analysis.
 
 ---
 
-# 🔮 Future Enhancements
+## 🔮 Future Enhancements
 
-This project can be extended in the future by implementing additional features and advanced machine learning techniques.
+This project can be extended by:
 
-Possible future enhancements include:
-
-* Using additional customer features for segmentation.
-* Applying Hierarchical Clustering.
+* Using additional customer features.
+* Performing clustering using Age, Income, and Spending Score.
+* Comparing K-Means with Hierarchical Clustering.
 * Applying DBSCAN Clustering.
-* Comparing multiple clustering algorithms.
-* Performing advanced customer behavior analysis.
-* Creating interactive dashboards using Streamlit.
+* Using the Silhouette Score to evaluate clusters.
+* Creating an interactive dashboard using Streamlit.
+* Building a customer analytics web application.
 * Integrating real-time customer data.
 * Developing personalized recommendation systems.
-* Deploying the project as a web application.
-* Integrating business intelligence dashboards.
 
 ---
 
-# ⚠️ Limitations
+## ⚠️ Limitations
 
-The K-Means algorithm has certain limitations:
+The K-Means algorithm has some limitations:
 
-* The number of clusters must be selected before training.
+* The number of clusters must be specified before training.
 * The algorithm may be sensitive to outliers.
 * Results depend on the selected features.
-* Different datasets may require different preprocessing techniques.
-* K-Means works best when clusters are relatively well-separated.
+* Different feature scaling methods may affect the results.
+* K-Means works best when clusters are reasonably well-separated.
 
 ---
 
-# 📋 Requirements
+## 📋 Requirements
 
-The project requires the following Python libraries:
+The following Python libraries are required:
 
 ```text
 pandas
@@ -837,7 +528,7 @@ scikit-learn
 
 ---
 
-# 👩‍💻 Author
+## 👩‍💻 Author
 
 **Premalatha Venkatesan**
 
@@ -845,24 +536,12 @@ B.Tech – Artificial Intelligence and Data Science
 
 ---
 
-# 📄 Conclusion
+## 📄 Conclusion
 
-This project demonstrates the practical application of **K-Means Clustering for Customer Segmentation**.
+This project demonstrates the practical application of the **K-Means Clustering algorithm for customer segmentation**.
 
-By analyzing customer Annual Income and Spending Score, the K-Means algorithm groups customers with similar financial and spending characteristics into meaningful clusters.
+Using customer information such as **Annual Income** and **Spending Score**, the algorithm identifies groups of customers with similar financial and spending characteristics.
 
-The project demonstrates important concepts in data science and machine learning, including:
+The project demonstrates important concepts in data science and machine learning, including data preprocessing, feature scaling, unsupervised learning, the Elbow Method, K-Means Clustering, and data visualization.
 
-* Data preprocessing.
-* Exploratory Data Analysis.
-* Feature scaling.
-* Unsupervised Machine Learning.
-* K-Means Clustering.
-* Elbow Method.
-* Cluster visualization.
-* Customer behavior analysis.
-
-The generated customer segments can provide valuable insights into different customer groups and can support businesses in developing targeted marketing strategies and improving customer engagement.
-
-This project serves as a practical example of how unsupervised machine learning can be applied to real-world business data to discover hidden patterns and meaningful customer segments.
-
+The generated customer segments can help businesses better understand customer behavior and support targeted marketing strategies and data-driven decision-making.
